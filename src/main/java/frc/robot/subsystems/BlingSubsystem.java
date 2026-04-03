@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.CANBus;
+import com.ctre.phoenix6.configs.CANdleConfiguration;
 import com.ctre.phoenix6.controls.ColorFlowAnimation;
 import com.ctre.phoenix6.controls.EmptyAnimation;
 import com.ctre.phoenix6.controls.FireAnimation;
@@ -59,7 +60,7 @@ public class BlingSubsystem extends SubsystemBase{
     private final SendableChooser<AnimationType> anim0Chooser = new SendableChooser<AnimationType>();
 
     public BlingSubsystem() {
-        var cfg = CANdleConfiguration();
+        var cfg = new CANdleConfiguration();
 
         cfg.LED.StripType = StripTypeValue.RGB;
         cfg.LED.BrightnessScalar = 1;
