@@ -10,6 +10,8 @@ import com.ctre.phoenix6.controls.RgbFadeAnimation;
 import com.ctre.phoenix6.controls.SingleFadeAnimation;
 import com.ctre.phoenix6.controls.SolidColor;
 import com.ctre.phoenix6.controls.StrobeAnimation;
+import com.ctre.phoenix6.controls.TwinkleAnimation;
+import com.ctre.phoenix6.controls.TwinkleOffAnimation;
 import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StatusLedWhenActiveValue;
@@ -64,7 +66,7 @@ public class BlingSubsystem extends SubsystemBase{
 
         cfg.CANdleFeatures.StatusLedWhenActive = StatusLedWhenActiveValue.Disabled;
 
-        candle.getConfiguration().apply(cfg);
+        candle.getConfigurator().apply(cfg);
 
         for (int i = 0; i < 8; ++i) {
             candle.setControl(new EmptyAnimation(i));
@@ -162,7 +164,102 @@ public class BlingSubsystem extends SubsystemBase{
         if (anim0State != anim0Selection) {
             anim0State = anim0Selection;
 
-            candle.setControl(new EmptyAnimation(slot0StartIdx).withSot(0));
+            candle.setControl(new EmptyAnimation(slot0StartIdx).withSlot(0));
+
+            switch (anim0State) {
+                default:
+                case ColorFlow:
+                    candle.setControl(
+                        new ColorFlowAnimation(slot0StartIdx, slot0EndIdx).withSlot(0)
+                            .withColor(yellow)
+                    );
+                    break;
+                case Rainbow:
+                    candle.setControl(
+                        new RainbowAnimation(slot0StartIdx, slot0EndIdx).withSlot(0)
+                    );
+                    break;
+                case SolidBlue:
+                    candle.setControl(
+                        new SolidColor(slot0StartIdx, slot0EndIdx)
+                            .withColor(blue)
+                    );
+                    break;
+                case SolidRed:
+                    candle.setControl(
+                        new SolidColor(slot0StartIdx, slot0EndIdx)
+                            .withColor(red)
+                    );
+                    break;
+                case SolidGreen:
+                    candle.setControl(
+                        new SolidColor(slot0StartIdx, slot0EndIdx)
+                            .withColor(green)
+                    );
+                    break;
+                case SolidYellow:
+                    candle.setControl(
+                        new SolidColor(slot0StartIdx, slot0EndIdx)
+                            .withColor(yellow)
+                    );
+                    break;
+                case SolidPurple:
+                    candle.setControl(
+                        new SolidColor(slot0StartIdx, slot0EndIdx)
+                            .withColor(purple)
+                    );
+                    break;
+                case SolidWhite:
+                    candle.setControl(
+                        new SolidColor(slot0StartIdx, slot0EndIdx)
+                            .withColor(white)
+                    );
+                    break;
+                case Twinkle:
+                    candle.setControl(
+                        new TwinkleAnimation(slot0StartIdx, slot0EndIdx).withSlot(0)
+                    );
+                    break;
+                case TwinkleOff:
+                    candle.setControl(
+                        new TwinkleOffAnimation(slot0StartIdx, slot0EndIdx).withSlot(0)
+                    );
+                    break;
+                case Fire:
+                    candle.setControl(
+                        new FireAnimation(slot0StartIdx, slot0EndIdx).withSlot(0)
+                            .withCooling(0.6)
+                            .withSparking(0.4)
+                    );
+                    break;
+                case Larson:
+                    candle.setControl(
+                        new LarsonAnimation(slot0StartIdx, slot0EndIdx).withSlot(0)
+                            .withColor(green)
+                    );
+                    break;
+                case RgbFade:
+                    candle.setControl(
+                        new RgbFadeAnimation(slot0StartIdx, slot0EndIdx).withSlot(0)
+                    );
+                    break;
+                case SingleFade:
+                    candle.setControl(
+                        new SingleFadeAnimation(slot0StartIdx, slot0EndIdx).withSlot(0)
+                            .withColor(green)
+                    );
+                    break;
+                case Strobe:
+                    candle.setControl(
+                        new StrobeAnimation(slot0StartIdx, slot0EndIdx).withSlot(0)
+                            .withColor(green)
+                            .withFrameRate(0)
+                    );
+                    break;
+            }
         }
     }
+
+    @Override
+    public void simulationPeriodic() {}
 }
