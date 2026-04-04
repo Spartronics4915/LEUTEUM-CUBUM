@@ -27,10 +27,8 @@ public class WristSubsystem extends SubsystemBase {
         new Constraints(MAX_VELOCITY, MAX_ACCELERATION)
     );
 
-    private double position = 0;
-    private double velocity = 0;
-    State currentState = new State(position,velocity);
-    State targetState = new State(position,velocity);
+    State currentState = new State(motorEncoder.getPosition(),0);
+    State targetState = new State(motorEncoder.getPosition(),0);
 
     SparkClosedLoopController closedLoopController = motor.getClosedLoopController();
 
@@ -73,7 +71,7 @@ public class WristSubsystem extends SubsystemBase {
     public Command setSetpointCommand(Rotation2d setpoint){
         return this.runOnce(()->setSetpoint(setpoint));
     }
-    
+
     public Command incrementSetpointCommand(Rotation2d change){
         return this.runOnce(()-> incrementSetpoint(change));
     }
