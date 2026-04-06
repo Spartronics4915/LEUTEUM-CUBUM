@@ -16,4 +16,16 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static class SwerveConstants {
+    public enum SwerveDirectories{
+        COMP_CHASSIS("swerve/comp-chassis");
+
+        public String directory;
+
+        private SwerveDirectories(String directory) {
+            this.directory = directory;
+        }
+       }
+  }
 }
