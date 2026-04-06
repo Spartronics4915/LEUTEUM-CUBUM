@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -19,13 +21,16 @@ public final class Constants {
 
   public static class SwerveConstants {
     public enum SwerveDirectories{
-        COMP_CHASSIS("swerve/comp-chassis");
+      COMP_CHASSIS("swerve/comp-chassis");
 
-        public String directory;
+      public String directory;
 
-        private SwerveDirectories(String directory) {
-            this.directory = directory;
-        }
-       }
+      private SwerveDirectories(String directory) {
+          this.directory = directory;
+      }
+    }
+
+    public static final double maxSpeed = Units.feetToMeters(6);
+    public static final double DEADBAND = 0.05;
   }
 }

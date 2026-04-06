@@ -38,18 +38,6 @@ public class RobotContainer {
     configureBindings();
   }
 
-  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(), 
-                                                                  () -> driverController.getLeftY() * -1,
-                                                                  () -> driverController.getLeftX() * -1)
-                                                                  .withControllerRotationAxis(driverController::getRightX)
-                                                                  .deadband(SwerveConstants.DEADBAND)
-                                                                  .scaleTranslation(0.8)
-                                                                  .allianceRelativeControl(true);
-
-  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverController::getRightX,
-                                                                                             driverController::getRightY)
-                                                                                             .headingWhile(true);
-
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
