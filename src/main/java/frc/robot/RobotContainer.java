@@ -24,6 +24,9 @@ import swervelib.SwerveInputStream;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final CommandXboxController driverController = new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
+  private final CommandXboxController operatorController = new CommandXboxController(OperatorConstants.OPERATOR_CONTROLLER_PORT);
+
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final SwerveSubsystem drivebase = new SwerveSubsystem(SwerveConstants.SwerveDirectories.COMP_CHASSIS);
@@ -38,6 +41,20 @@ public class RobotContainer {
     configureBindings();
   }
 
+  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(), 
+                                                                () -> driverController.getLeftY() * -1,
+                                                                () -> driverController.getLeftX() * -1)
+                                                                .withControllerRotationAxis(driverController::getRightX)
+                                                                .deadband(SwerveConstants.DEADBAND)
+                                                                .scaleTranslation(0.8)
+                                                                .allianceRelativeControl(true);
+  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverController::getRightX,
+                                                                                             driverController::getRightY)
+                                                                                             .headingWhile(true);
+
+  Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
+
+  Command driveFieldOrientedAngularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the

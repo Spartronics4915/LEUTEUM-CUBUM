@@ -56,6 +56,20 @@ public class SwerveSubsystem extends SubsystemBase{
         swerveDrive.setCosineCompensator(false);
         swerveDrive.setAngularVelocityCompensation(false, false, 0);
         swerveDrive.setModuleEncoderAutoSynchronize(false, 0);
+
+        //AutoBuilder.configure(
+        //    this::getPose, 
+        //    swerveDrive::resetOdometry, 
+        //    swerveDrive::getRobotVelocity, 
+        //    (speeds, FF) -> {shimPublisher.accept(speeds); drive(speeds);}, 
+        //    SwerveConstants.AutoConstants.driveController, 
+        //    SwerveConstants.AutoConstants.PathplannerConfigs.COMP_CHASSIS.config, 
+        //    () -> {
+        //        Optional<Alliance> temp = DriverStation.getAlliance();
+        //        if(temp.isEmpty()) return false;
+        //        if (temp.get() == Alliance.Red) {return true;}
+        //        return false;
+        //    }, this);
         
         SmartDashboard.putData("set angle to 0", Commands.runOnce(() -> {
             var currPose = getPose();
